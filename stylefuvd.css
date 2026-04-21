@@ -1,0 +1,84 @@
+body {
+    background-color: rgb(230, 224, 210);
+}
+h1 {
+    font-size: 30px;
+    color: rgb(0, 0, 0);
+    font-family: 'Courier New', Courier, monospace;
+    margin-left: 30px;
+}
+h2 {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+    font-family: 'Courier New', Courier, monospace;
+    margin-left: 30px;
+}
+p {
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    font-family: 'Courier New', Courier, monospace;
+    margin-left: 30px;
+}
+li {
+    font-size: 16px;
+    color: rgb(0, 0, 0);
+    padding: 5px;
+}
+a {
+    font-size: 14px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.content {
+    display: flex;
+    margin: 30px;
+}
+.content-left {
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    background-color: rgb(254, 222, 162);
+    margin: 20px;
+    border-radius: 15px;
+}
+.content-right {
+    background-color: rgb(254, 222, 162);
+    display: flex;
+    padding: 30px;
+    width: 50%;
+    margin: 20px;
+    border-radius: 15px;
+}
+.image {
+    width: 100%;
+    height: auto;
+}
+.header {
+    display: flex;
+    
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: rgb(209, 116, 100);
+}
+.slide {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 1.2s ease-in-out;
+}
+
+.slideshow-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1 / 1; /* подгоните под пропорции фото */
+}
+
+.slide.active {
+    opacity: 1;
+    position: relative;
+}

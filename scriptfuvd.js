@@ -1,3 +1,6 @@
+// script.js
+import { SUN_ICON, MOON_ICON } from './theme-config.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const slides = document.querySelectorAll('.slider__slide');
     const dots = document.querySelectorAll('.slider__dot');
@@ -11,7 +14,6 @@ document.addEventListener('DOMContentLoaded', () => {
             dots.forEach(dot => dot.classList.remove('slider__dot--active'));
             slides[index].classList.add('slider__slide--active');
             dots[index].classList.add('slider__dot--active');
-            
             currentIndex = index;
         }
 
@@ -32,25 +34,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-
     if (themeToggle) {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
+        themeToggle.innerHTML = `
+            <span class="toggle-icon toggle-icon--sun">${SUN_ICON}</span>
+            <span class="toggle-icon toggle-icon--moon">${MOON_ICON}</span>
+        `;
+    }
+
+    const body = document.body;
+    if (themeToggle) {
+        if (localStorage.getItem('theme') === 'dark') {
             body.classList.add('dark-theme');
-            themeToggle.textContent = '☀️';
         }
 
         themeToggle.addEventListener('click', () => {
             body.classList.toggle('dark-theme');
-
-            if (body.classList.contains('dark-theme')) {
-                themeToggle.textContent = '☀️';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                themeToggle.textContent = '🌙';
-                localStorage.setItem('theme', 'light');
-            }
+            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
         });
     }
 });

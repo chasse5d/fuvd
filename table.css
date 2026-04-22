@@ -1,0 +1,27 @@
+table {
+    border-collapse: collapse;
+    width: 100%;;
+    border: 2px solid;
+}
+td {
+    padding: 7px;
+    border: 1px solid;
+}
+th {
+    text-align: left;
+    background-color: darkgray;
+    border: 1px solid;
+}
+tr:nth-child(3n){
+    background-color:rgb(253, 255, 199)
+}
+tr:nth-child(3n+1){
+    background-color:rgb(205, 255, 199)
+}
+tr:nth-child(3n+2){
+    background-color:rgb(199, 233, 255)
+}
+caption {
+    font-size: 24px;
+    font-family:Georgia, 'Times New Roman', Times, serif
+}

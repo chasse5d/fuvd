@@ -26,6 +26,7 @@ body {
 }
 
 .header {
+    position: relative;
     display: flex;
     justify-content: center;
     padding: 2rem 1rem;
@@ -61,6 +62,7 @@ body {
 }
 
 .main { padding: 2rem; }
+
 .main__container {
     max-width: 1200px;
     margin: 0 auto;
@@ -118,6 +120,12 @@ body {
 
 .nav__item:nth-child(3) .nav__link:hover {
     background: linear-gradient(135deg, #9cbdf6, #726bf9);
+    color: #f8f9fa;
+    box-shadow: 0 0 8px rgba(100, 116, 139, 0.2);
+    transform: translateX(5px);
+}
+.nav__item:nth-child(4) .nav__link:hover {
+    background: linear-gradient(135deg, #9cf6b4, #52d228);
     color: #f8f9fa;
     box-shadow: 0 0 8px rgba(100, 116, 139, 0.2);
     transform: translateX(5px);
@@ -249,7 +257,7 @@ body {
 }
 
 .theme-toggle {
-    position: absolute;
+    position: fixed;
     top: 15px;
     right: 20px;
     background: rgba(0, 0, 0, 0.1);

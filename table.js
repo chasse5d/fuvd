@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const headers = table.querySelectorAll('.data-table__cell--sortable');
     
     let currentSort = { column: null, direction: 'asc' };
-    let originalRows = Array.from(tbody.querySelectorAll('tr'));
+    let originalRows = Array.from(tbody.querySelectorAll('tr')).map(tr => tr.cloneNode(true));
 
     searchInput.addEventListener('input', (e) => {
         const query = e.target.value.toLowerCase().trim();
@@ -16,10 +16,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function filterRows(query) {
-        originalRows.forEach(row => {
+        originalRows.forEach((row, index) => {
             const text = row.textContent.toLowerCase();
             const match = text.includes(query);
-            row.style.display = match ? '' : 'none';
+            const domRow = tbody.children[index];
+            if (domRow) {
+                domRow.style.display = match ? '' : 'none';
+            }
         });
     }
 
@@ -38,22 +41,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function sortTable(column, direction) {
-        const rows = Array.from(tbody.querySelectorAll('tr'));
-        rows.sort((a, b) => {
-            const getCell = (row) => {
-                if (column === 'number') return row.cells[0].textContent;
-                if (column === 'surname') return row.cells[1].textContent;
-                if (column === 'name') return row.cells[2].textContent;
-                if (column === 'age') return parseInt(row.cells[3].textContent) || 0;
-                if (column === 'group') return row.cells[4].textContent;
-                if (column === 'direction') return row.cells[5].textContent;
-                if (column === 'form') return row.cells[6].textContent;
-                return '';
+        const sortedRows = [...originalRows].sort((a, b) => {
+            const getCellText = (row, colIndex) => {
+                const cell = row.cells[colIndex];
+                return cell ? cell.textContent.trim() : '';
             };
-            
-            const aVal = getCell(a);
-            const bVal = getCell(b);
-            
+
+            let aVal, bVal;
+            switch(column) {
+                case 'number': aVal = parseInt(getCellText(a, 0)) || 0; bVal = parseInt(getCellText(b, 0)) || 0; break;
+                case 'surname': aVal = getCellText(a, 1); bVal = getCellText(b, 1); break;
+                case 'name': aVal = getCellText(a, 2); bVal = getCellText(b, 2); break;
+                case 'age': aVal = parseInt(getCellText(a, 3)) || 0; bVal = parseInt(getCellText(b, 3)) || 0; break;
+                case 'group': aVal = getCellText(a, 4); bVal = getCellText(b, 4); break;
+                case 'direction': aVal = getCellText(a, 5); bVal = getCellText(b, 5); break;
+                case 'form': aVal = getCellText(a, 6); bVal = getCellText(b, 6); break;
+                default: return 0;
+            }
+
             if (!isNaN(aVal) && !isNaN(bVal)) {
                 return direction === 'asc' ? aVal - bVal : bVal - aVal;
             }
@@ -61,8 +66,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 ? aVal.localeCompare(bVal, 'ru') 
                 : bVal.localeCompare(aVal, 'ru');
         });
-        
-        rows.forEach(row => tbody.appendChild(row));
+
+        tbody.innerHTML = '';
+        sortedRows.forEach(row => {
+            tbody.appendChild(row.cloneNode(true));
+        });
+        originalRows = sortedRows.map(r => r.cloneNode(true));
     }
 
     function updateSortIndicators() {
@@ -74,19 +83,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     exportBtn.addEventListener('click', () => {
-        const headers = ['№', 'Фамилия', 'Имя', 'Возраст', 'Группа', 'Направление', 'Форма'];
-        const rows = Array.from(tbody.querySelectorAll('tr'))
-            .filter(tr => tr.style.display !== 'none')
-            .map(tr => Array.from(tr.querySelectorAll('.data-table__cell'))
-                .map(td => td.textContent.replace('Очная', 'Очная').replace('Заочная', 'Заочная').replace('Не поступил', 'Не поступил').trim())
-            );
-        
-        const csv = [
-            headers.join(';'),
-            ...rows.map(row => row.join(';'))
+        const visibleRows = Array.from(tbody.querySelectorAll('tr'))
+            .filter(tr => tr.style.display !== 'none');
+
+        const csvContent = [
+            ['№', 'Фамилия', 'Имя', 'Возраст', 'Группа', 'Направление', 'Форма'].join(';'),
+            ...visibleRows.map(tr => 
+                Array.from(tr.querySelectorAll('.data-table__cell'))
+                    .map(td => td.textContent.replace(/[\n\r]+/g, '').trim())
+                    .join(';')
+            )
         ].join('\n');
-        
-        const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+
+        const blob = new Blob(['\ufeff' + csvContent], { type: 'text/csv;charset=utf-8;' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
         link.download = `fuvd_students_${new Date().toISOString().slice(0,10)}.csv`;
@@ -96,10 +105,11 @@ document.addEventListener('DOMContentLoaded', () => {
     resetBtn.addEventListener('click', () => {
         searchInput.value = '';
         currentSort = { column: null, direction: 'asc' };
+        tbody.innerHTML = '';
         originalRows.forEach(row => {
-            row.style.display = '';
-            tbody.appendChild(row);
+            tbody.appendChild(row.cloneNode(true));
         });
+
         updateSortIndicators();
         updateStats();
     });
@@ -119,5 +129,9 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('parttime-count').textContent = parttime;
     }
 
+    tbody.innerHTML = '';
+    originalRows.forEach(row => {
+        tbody.appendChild(row.cloneNode(true));
+    });
     updateStats();
 });

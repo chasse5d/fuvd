@@ -439,11 +439,24 @@ body.dark-theme .footer {
 
 .schedule-table-wrapper {
     border-radius: 16px;
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
     box-shadow: var(--shadow);
     background: var(--color-surface);
     scrollbar-width: thin;
     scrollbar-color: var(--color-secondary) transparent;
+}
+
+.schedule-table-wrapper::-webkit-scrollbar {
+    height: 6px;
+}
+.schedule-table-wrapper::-webkit-scrollbar-track {
+    background: transparent;
+}
+.schedule-table-wrapper::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    border-radius: 10px;
 }
 
 .weekly-table {

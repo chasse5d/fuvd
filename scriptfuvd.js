@@ -1,6 +1,3 @@
-// script.js
-import { SUN_ICON, MOON_ICON } from './theme-config.js';
-
 document.addEventListener('DOMContentLoaded', () => {
     const slides = document.querySelectorAll('.slider__slide');
     const dots = document.querySelectorAll('.slider__dot');
@@ -34,14 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const themeToggle = document.getElementById('theme-toggle');
-    if (themeToggle) {
-        themeToggle.innerHTML = `
-            <span class="toggle-icon toggle-icon--sun">${SUN_ICON}</span>
-            <span class="toggle-icon toggle-icon--moon">${MOON_ICON}</span>
-        `;
-    }
-
     const body = document.body;
+
     if (themeToggle) {
         if (localStorage.getItem('theme') === 'dark') {
             body.classList.add('dark-theme');

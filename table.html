@@ -1,109 +1,133 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="ru">
 <head>
-    <title>
-        Список студентов-рыб
-    </title>
-    <link rel="stylesheet" href="table.css" </head>
-    <link rel="stylesheet" href="stylefuvd.css" </head>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список студентов — ФУВД</title>
+    <link rel="stylesheet" href="stylefuvd.css">
+    <link rel="stylesheet" href="table.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
 <body>
-    <div class="header">
-        <a href="file:///C:/Users/%D0%94%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9/Desktop/fuvd.com/index.html"> Основная страница
-        </a>
-    </div>
-    <form>
-        <table>
-            <caption>
-                Список студентов
-            </caption>
-            <tr>
-                <th>№</th>
-                <th>Фамилия</th>
-                <th>Имя</th>
-                <th>Возраст</th>
-                <th>Номер группы</th>
-                <th>Название направления</th>
-                <th>Форма поступления</th>
-            </tr>
-            <tr>
-                <td>1</td>
-                <td>Гриффин</td>
-                <td>Питер</td>
-                <td>20</td>
-                <td>4302</td>
-                <td>Физика</td>
-                <td>Очная</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Дёрден</td>
-                <td>Тайлер</td>
-                <td>22</td>
-                <td>4405</td>
-                <td>Химия</td>
-                <td>Очная</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Орлов</td>
-                <td>Глеб</td>
-                <td>25</td>
-                <td>6502</td>
-                <td>ИВТ</td>
-                <td>Очная</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Лобанов</td>
-                <td>Семен</td>
-                <td>21</td>
-                <td>8512</td>
-                <td>Химия</td>
-                <td>Очная</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Костылев</td>
-                <td>Александр</td>
-                <td>22</td>
-                <td>5202</td>
-                <td>Юриспруденция</td>
-                <td>Заочная</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>Колбасенко</td>
-                <td>Данил</td>
-                <td>12</td>
-                <td>-</td>
-                <td>Ещё думает</td>
-                <td>Не поступил</td>
-            </tr>
-            <tr>
-                <td>7</td>
-                <td>Татыржа</td>
-                <td>Антон</td>
-                <td>28</td>
-                <td>7405</td>
-                <td>Биология</td>
-                <td>Заочная</td>
-            </tr>
-            <tr>
-                <td><label for="nom">№</label><input type="text" id="nom"></td>
-                <td><label for="fam">Фамилия</label><input type="text" id="№"></td>
-                <td><label for="name">Имя</label><input type="text" id="name"></td>
-                <td><label for="age">Возраст</label><input type="text" id="age"></td>
-                <td><label for="gorup">Номер группы</label><input type="text" id="group"></td>
-                <td><label for="napr">Название направления</label><input type="text" id="napr"></td>
-                <td><label for="forma">Форма поступления</label><input type="text" id="forma"></td>
-            </tr>
-        </table>
-        <div>
-            <input type="submit" value="Добавить">
+<button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему"></button>
+    <header class="header">
+        <div class="header__card">
+            <h1 class="header__title">Список студентов-рыб</h1>
+            <p class="header__subtitle">ФУВД • 2026</p>
         </div>
-    </form>
-</body>
+    </header>
 
+    <main class="main">
+        <div class="table-controls">
+            <div class="search-box">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="M21 21l-4.35-4.35"></path>
+                </svg>
+                <input type="text" id="table-search" class="search-input" placeholder="Поиск по фамилии, имени или группе...">
+            </div>
+            <div class="table-actions">
+                <button id="export-csv" class="btn btn--primary">Экспорт CSV</button>
+                <button id="reset-filters" class="btn btn--secondary">Сбросить</button>
+            </div>
+        </div>
+
+        <div class="table-wrapper">
+            <table class="data-table" id="students-table">
+                <thead class="data-table__head">
+                    <tr>
+                        <th class="data-table__cell data-table__cell--number" data-sort="number">№</th>
+                        <th class="data-table__cell data-table__cell--sortable" data-sort="surname">Фамилия</th>
+                        <th class="data-table__cell data-table__cell--sortable" data-sort="name">Имя</th>
+                        <th class="data-table__cell data-table__cell--sortable" data-sort="age">Возраст</th>
+                        <th class="data-table__cell data-table__cell--sortable" data-sort="group">Группа</th>
+                        <th class="data-table__cell data-table__cell--sortable" data-sort="direction">Направление</th>
+                        <th class="data-table__cell data-table__cell--sortable" data-sort="form">Форма</th>
+                    </tr>
+                </thead>
+                <tbody class="data-table__body">
+                    <tr>
+                        <td class="data-table__cell" data-label="№">1</td>
+                        <td class="data-table__cell" data-label="Фамилия">Гриффин</td>
+                        <td class="data-table__cell" data-label="Имя">Питер</td>
+                        <td class="data-table__cell" data-label="Возраст">20</td>
+                        <td class="data-table__cell" data-label="Группа">4302</td>
+                        <td class="data-table__cell" data-label="Направление">Физика</td>
+                        <td class="data-table__cell" data-label="Форма"><span class="badge badge--primary">Очная</span></td>
+                    </tr>
+                    <tr>
+                        <td class="data-table__cell" data-label="№">2</td>
+                        <td class="data-table__cell" data-label="Фамилия">Дёрден</td>
+                        <td class="data-table__cell" data-label="Имя">Тайлер</td>
+                        <td class="data-table__cell" data-label="Возраст">22</td>
+                        <td class="data-table__cell" data-label="Группа">4405</td>
+                        <td class="data-table__cell" data-label="Направление">Химия</td>
+                        <td class="data-table__cell" data-label="Форма"><span class="badge badge--primary">Очная</span></td>
+                    </tr>
+                    <tr>
+                        <td class="data-table__cell" data-label="№">3</td>
+                        <td class="data-table__cell" data-label="Фамилия">Орлов</td>
+                        <td class="data-table__cell" data-label="Имя">Глеб</td>
+                        <td class="data-table__cell" data-label="Возраст">25</td>
+                        <td class="data-table__cell" data-label="Группа">6502</td>
+                        <td class="data-table__cell" data-label="Направление">ИВТ</td>
+                        <td class="data-table__cell" data-label="Форма"><span class="badge badge--primary">Очная</span></td>
+                    </tr>
+                    <tr>
+                        <td class="data-table__cell" data-label="№">4</td>
+                        <td class="data-table__cell" data-label="Фамилия">Лобанов</td>
+                        <td class="data-table__cell" data-label="Имя">Семен</td>
+                        <td class="data-table__cell" data-label="Возраст">21</td>
+                        <td class="data-table__cell" data-label="Группа">8512</td>
+                        <td class="data-table__cell" data-label="Направление">Химия</td>
+                        <td class="data-table__cell" data-label="Форма"><span class="badge badge--primary">Очная</span></td>
+                    </tr>
+                    <tr>
+                        <td class="data-table__cell" data-label="№">5</td>
+                        <td class="data-table__cell" data-label="Фамилия">Костылев</td>
+                        <td class="data-table__cell" data-label="Имя">Александр</td>
+                        <td class="data-table__cell" data-label="Возраст">22</td>
+                        <td class="data-table__cell" data-label="Группа">5202</td>
+                        <td class="data-table__cell" data-label="Направление">Юриспруденция</td>
+                        <td class="data-table__cell" data-label="Форма"><span class="badge badge--warning">Заочная</span></td>
+                    </tr>
+                    <tr>
+                        <td class="data-table__cell" data-label="№">6</td>
+                        <td class="data-table__cell" data-label="Фамилия">Колбасенко</td>
+                        <td class="data-table__cell" data-label="Имя">Данил</td>
+                        <td class="data-table__cell" data-label="Возраст">12</td>
+                        <td class="data-table__cell" data-label="Группа">—</td>
+                        <td class="data-table__cell" data-label="Направление">Ещё думает</td>
+                        <td class="data-table__cell" data-label="Форма"><span class="badge badge--danger">Не поступил</span></td>
+                    </tr>
+                    <tr>
+                        <td class="data-table__cell" data-label="№">7</td>
+                        <td class="data-table__cell" data-label="Фамилия">Татыржа</td>
+                        <td class="data-table__cell" data-label="Имя">Антон</td>
+                        <td class="data-table__cell" data-label="Возраст">28</td>
+                        <td class="data-table__cell" data-label="Группа">7405</td>
+                        <td class="data-table__cell" data-label="Направление">Биология</td>
+                        <td class="data-table__cell" data-label="Форма"><span class="badge badge--warning">Заочная</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="table-stats">
+            <span id="results-count">Показано: 7 из 7</span>
+            <span class="table-stats__divider">•</span>
+            <span>Очных: <strong id="fulltime-count">5</strong></span>
+            <span class="table-stats__divider">•</span>
+            <span>Заочных: <strong id="parttime-count">2</strong></span>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p class="footer__text">© 2026 ФУВД. Все права защищены (или нет).</p>
+    </footer>
+
+    <script src="scriptfuvd.js"></script>
+    <script src="table.js"></script>
+    <script src="icon-table.js"></script>
+</body>
 </html>

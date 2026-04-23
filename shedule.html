@@ -3,330 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Расписание | Недельная сетка</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --color-primary: #1e293b;
-            --color-secondary: #3b82f6;
-            --color-surface: #ffffff;
-            --color-bg: #f1f5f9;
-            --color-sidebar: #f8fafc;
-            --color-text: #0f172a;
-            --color-text-light: #475569;
-            --font-main: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            --radius: 20px;
-            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.02);
-            --transition: all 0.2s ease;
-        }
-
-        body {
-            font-family: var(--font-main);
-            background: var(--color-bg);
-            color: var(--color-text);
-            line-height: 1.5;
-            padding: 2rem;
-            min-height: 100vh;
-        }
-
-        body.dark-theme {
-            --color-primary: #cbd5e6;
-            --color-surface: #2d2d3d;
-            --color-bg: #1e1e2a;
-            --color-sidebar: #252535;
-            --color-text: #f0f0f0;
-            --color-text-light: #a0aec0;
-            background: #1e1e2a;
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .hero {
-            margin-bottom: 1.5rem;
-        }
-        .hero h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--color-secondary), #5b8cff);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-            letter-spacing: -0.3px;
-        }
-        .hero .sub {
-            color: var(--color-text-light);
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-            border-left: 3px solid var(--color-secondary);
-            padding-left: 0.75rem;
-        }
-
-        .table-wrapper {
-            border-radius: var(--radius);
-            overflow-x: auto;
-            overflow-y: hidden;
-            box-shadow: var(--shadow);
-            background: var(--color-surface);
-            transition: background 0.3s, box-shadow 0.3s;
-            scrollbar-width: thin;
-            scrollbar-color: var(--color-secondary) transparent;
-        }
-        .table-wrapper::-webkit-scrollbar {
-            height: 8px;
-        }
-        .table-wrapper::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .table-wrapper::-webkit-scrollbar-thumb {
-            background: var(--color-secondary);
-            border-radius: 4px;
-        }
-
-        .weekly-table {
-            width: 100%;
-            border-collapse: collapse;
-            min-width: 800px;
-            font-family: var(--font-main);
-        }
-
-        .weekly-table__head {
-            background: linear-gradient(135deg, var(--color-primary), #2d3748);
-            color: white;
-        }
-
-        .weekly-table__head .weekly-table__cell {
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.85rem;
-            letter-spacing: 0.5px;
-            padding: 1rem 1.2rem;
-            text-align: center;
-            border-bottom: none;
-            color:#ffcc00;
-        }
-
-        .weekly-table__body .weekly-table__cell:first-child {
-            font-weight: 600;
-            background: var(--color-sidebar);
-            color: var(--color-primary);
-            text-align: center;
-            white-space: nowrap;
-            border-right: 1px solid #e2e8f0;
-        }
-
-        .weekly-table__cell {
-            padding: 1rem 1.2rem;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-            border-right: 1px solid #e2e8f0;
-            font-size: 0.95rem;
-            transition: background 0.2s, color 0.3s;
-            color: var(--color-text);
-        }
-
-        .weekly-table__cell:last-child {
-            border-right: none;
-        }
-
-        .weekly-table__body tr:nth-child(even) {
-            background: #f8fafc;
-        }
-        .weekly-table__body tr:hover {
-            background: linear-gradient(90deg, rgba(59,130,246,0.04), transparent);
-        }
-
-        .placeholder-cell {
-            font-family: var(--font-main);
-            font-weight: 500;
-            color: var(--color-text-light);
-            letter-spacing: 0.3px;
-        }
-
-        .theme-btn {
-            position: fixed;
-            top: 24px;
-            right: 24px;
-            background: var(--color-surface);
-            border: 1px solid #cbd5e1;
-            border-radius: 60px;
-            padding: 0.6rem 1rem;
-            font-weight: 500;
-            font-size: 0.8rem;
-            cursor: pointer;
-            backdrop-filter: blur(8px);
-            box-shadow: var(--shadow);
-            z-index: 100;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-family: var(--font-main);
-        }
-        .theme-btn:hover {
-            transform: scale(1.02);
-            background: var(--color-sidebar);
-        }
-        body.dark-theme .theme-btn {
-            background: #3d3d5c;
-            border-color: #5a5a7a;
-            color: white;
-        }
-
-        @media (max-width: 768px) {
-            body {
-                padding: 1rem;
-            }
-            .hero h1 {
-                font-size: 1.4rem;
-            }
-            .weekly-table__cell {
-                padding: 0.75rem 0.5rem;
-                font-size: 0.85rem;
-            }
-            .weekly-table__head .weekly-table__cell {
-                padding: 0.75rem 0.5rem;
-                font-size: 0.7rem;
-            }
-        }
-
-        body.dark-theme .table-wrapper {
-            background: #2d2d3d;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-        body.dark-theme .weekly-table__cell {
-            border-bottom-color: #4a4a6a;
-            border-right-color: #4a4a6a;
-            color: #ffcc00;
-        }
-        body.dark-theme .weekly-table__body tr:nth-child(even) {
-            background: #333345;
-        }
-        body.dark-theme .weekly-table__body tr:hover {
-            background: linear-gradient(90deg, rgba(77,171,247,0.1), transparent);
-        }
-        body.dark-theme .weekly-table__body .weekly-table__cell:first-child {
-            background: #252535;
-            color: #93c5fd;
-            border-right-color: #4a4a6a;
-        }
-        body.dark-theme .placeholder-cell {
-            color: #a0a0b0;
-        }
-    </style>
+    <title>Расписание - ФУВД</title>
+    <link rel="stylesheet" href="stylefuvd.css">
 </head>
 <body>
-<div class="container">
-    <div class="hero">
-        <h1>📅 Расписание занятий</h1>
-        <div class="sub">#########</div>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему"></button>
+
+    <div class="schedule-container">
+        <div class="schedule-hero">
+            <h1>Расписание занятий</h1>
+            <div class="sub">Недельная сетка занятий</div>
+        </div>
+
+        <div class="schedule-table-wrapper">
+            <table class="weekly-table">
+                <thead class="weekly-table__head">
+                    <tr>
+                        <th class="weekly-table__cell">⏱ Время</th>
+                        <th class="weekly-table__cell">Понедельник</th>
+                        <th class="weekly-table__cell">Вторник</th>
+                        <th class="weekly-table__cell">Среда</th>
+                        <th class="weekly-table__cell">Четверг</th>
+                        <th class="weekly-table__cell">Пятница</th>
+                        <th class="weekly-table__cell">Суббота</th>
+                    </tr>
+                </thead>
+                <tbody class="weekly-table__body">
+                    <tr>
+                        <td class="weekly-table__cell weekly-table__cell--time">08:00 – 09:35</td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                    </tr>
+                    <tr>
+                        <td class="weekly-table__cell weekly-table__cell--time">09:45 – 11:20</td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                    </tr>
+                    <tr>
+                        <td class="weekly-table__cell weekly-table__cell--time">11:30 – 13:05</td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                    </tr>
+                    <tr>
+                        <td class="weekly-table__cell weekly-table__cell--time">13:30 – 15:05</td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                    </tr>
+                    <tr>
+                        <td class="weekly-table__cell weekly-table__cell--time">15:15 – 16:50</td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                    </tr>
+                    <tr>
+                        <td class="weekly-table__cell weekly-table__cell--time">17:00 – 18:35</td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                    </tr>
+                    <tr>
+                        <td class="weekly-table__cell weekly-table__cell--time">18:45 – 20:15</td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                        <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
-    <div class="table-wrapper">
-        <table class="weekly-table">
-            <thead class="weekly-table__head">
-                <tr>
-                    <th class="weekly-table__cell">⏱ Время</th>
-                    <th class="weekly-table__cell">Понедельник</th>
-                    <th class="weekly-table__cell">Вторник</th>
-                    <th class="weekly-table__cell">Среда</th>
-                    <th class="weekly-table__cell">Четверг</th>
-                    <th class="weekly-table__cell">Пятница</th>
-                    <th class="weekly-table__cell">Суббота</th>
-                </tr>
-            </thead>
-            <tbody class="weekly-table__body">
-                <tr>
-                    <td class="weekly-table__cell">08:00 – 09:35</td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                </tr>
-                <tr>
-                    <td class="weekly-table__cell">09:45 – 11:20</td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                </tr>
-                <tr>
-                    <td class="weekly-table__cell">11:30 – 13:05</td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                </tr>
-                <tr>
-                    <td class="weekly-table__cell">13:30 – 15:05</td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                </tr>
-                <tr>
-                    <td class="weekly-table__cell">15:15 – 16:50</td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                </tr>
-                <tr>
-                    <td class="weekly-table__cell">17:00 – 18:35</td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                </tr>
-                <tr>
-                    <td class="weekly-table__cell">18:45 – 20:15</td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                    <td class="weekly-table__cell"><span class="placeholder-cell">##</span></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<button class="theme-btn" id="theme-toggle">🌙 Тёмная тема</button>
-
-<script>
-    const themeBtn = document.getElementById('theme-toggle');
-    if (localStorage.getItem('theme') === 'dark') {
-        document.body.classList.add('dark-theme');
-        themeBtn.innerHTML = '☀️ Светлая тема';
-    } else {
-        themeBtn.innerHTML = '🌙 Тёмная тема';
-    }
-    themeBtn.addEventListener('click', () => {
-        document.body.classList.toggle('dark-theme');
-        const isDark = document.body.classList.contains('dark-theme');
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
-        themeBtn.innerHTML = isDark ? '☀️ Светлая тема' : '🌙 Тёмная тема';
-    });
-</script>
+    <script src="theme-config.js"></script>
+    <script src="scriptfuvd.js"></script>
 </body>
 </html>

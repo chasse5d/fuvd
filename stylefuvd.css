@@ -413,3 +413,129 @@ body.dark-theme .footer {
     border-top-color: #4a4a6a !important;
     color: #808090 !important;
 }
+
+.schedule-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+.schedule-hero { margin-bottom: 1.5rem; }
+.schedule-hero h1 {
+    font-size: 1.9rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--color-secondary), #5b8cff);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    letter-spacing: -0.3px;
+}
+.schedule-hero .sub {
+    color: var(--color-text-light);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+    border-left: 3px solid var(--color-secondary);
+    padding-left: 0.75rem;
+}
+
+.schedule-table-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    background: var(--color-surface);
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-secondary) transparent;
+}
+
+.weekly-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+    font-family: var(--font-main);
+}
+
+.weekly-table__head {
+    background: var(--color-primary);
+}
+.weekly-table__head .weekly-table__cell {
+    padding: 1.2rem 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    text-align: center;
+    border: none;
+    color: #ffcc00;
+    border-right: 1px solid rgba(255,255,255,0.1);
+}
+.weekly-table__head .weekly-table__cell:last-child {
+    border-right: none;
+}
+
+.weekly-table__cell {
+    padding: 1.2rem 0.5rem;
+    text-align: center;
+    border: none;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+    border-bottom: 1px solid #f1f5f9;
+    border-right: 1px solid #f1f5f9;
+}
+.weekly-table__cell:last-child { border-right: none; }
+
+.weekly-table__cell--time {
+    font-weight: 700;
+    color: var(--color-text);
+    background-color: #ffffff;
+    border-right: 1px solid #e2e8f0;
+    white-space: nowrap;
+    width: 140px;
+}
+
+.weekly-table__body tr:nth-child(even) .weekly-table__cell {
+    background-color: #f8fafc; 
+}
+.weekly-table__body tr:nth-child(even) .weekly-table__cell--time {
+    background-color: #ffffff;
+}
+
+.weekly-table__body tr:hover .weekly-table__cell {
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.placeholder-cell {
+    font-weight: 500;
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+    .schedule-container { padding: 1rem; }
+    .schedule-hero h1 { font-size: 1.4rem; }
+    .weekly-table__head .weekly-table__cell { padding: 1rem 0.5rem; font-size: 0.7rem; }
+    .weekly-table__cell { padding: 1rem 0.2rem; font-size: 0.8rem; }
+}
+
+body.dark-theme .schedule-table-wrapper {
+    background: #2d2d3d !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
+}
+body.dark-theme .weekly-table__head {
+    background: #1e1e2a !important;
+}
+body.dark-theme .weekly-table__cell {
+    border-bottom-color: #3d3d5c !important;
+    border-right-color: #3d3d5c !important;
+    color: #e0e0e0 !important;
+}
+body.dark-theme .weekly-table__cell--time {
+    background-color: #2d2d3d !important;
+    color: #ffcc00 !important;
+    border-right-color: #3d3d5c !important;
+}
+body.dark-theme .weekly-table__body tr:nth-child(even) .weekly-table__cell {
+    background-color: #252535 !important;
+}
+body.dark-theme .weekly-table__body tr:nth-child(even) .weekly-table__cell--time {
+    background-color: #2d2d3d !important;
+}
+body.dark-theme .placeholder-cell { color: #64748b !important; }

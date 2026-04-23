@@ -9,13 +9,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему"></button>
     <header class="header">
         <div class="header__card">
-            <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему"></button>
             <h1 class="header__title">Федеральный Университет Водных Дебилов</h1>
             <p class="header__subtitle">МБОУФГБУЗООО</p>
         </div>
     </header>
+
     <main class="main">
         <div class="main__container">
             <aside class="sidebar">
@@ -68,17 +69,19 @@
                     <p class="content__text">Здесь вы не можете найти информацию о нашем университете</p>
                     
                     <div class="cards">
-                        <a href="shedule.html">
-                            <article class="card",class="card-link" style="text-decoration: none; display: block;>
+                        <a href="shedule.html" class="card-link">
+                            <article class="card">
                                 <h3 class="card__title">Аква-сессия</h3>
                                 <p class="card__text">Здесь можно будет посмотреть расписание</p>
                             </article>
                         </a>
+                        
                         <article class="card">
                             <h3 class="card__title">Научные работы</h3>
                             <p class="card__text">Научные проекты студентов-рыб (⚙️ в разработке)</p>
                         </article>
-                        <a href="table.html" class="card-link" style="text-decoration: none; display: block;">
+                        
+                        <a href="table.html" class="card-link">
                             <article class="card">
                                 <h3 class="card__title">Наши студенты</h3>
                                 <p class="card__text">Рыбы, раки и не только. Посмотрите какие чудища учатся у нас! (⚙️ в разработке)</p>
@@ -93,7 +96,8 @@
     <footer class="footer">
         <p class="footer__text">© 2026 ФУВД. Все права защищены (или нет).</p>
     </footer>
-    <script type="module" src="theme-config.js"></script>
-    <script type="module" src="scriptfuvd.js"></script>
+
+    <script src="scriptfuvd.js"></script>
+    <script src="theme-config.js"></script>
 </body>
 </html>

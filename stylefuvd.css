@@ -556,3 +556,68 @@ body.dark-theme .weekly-table__body tr:nth-child(even) .weekly-table__cell--time
     background-color: #2d2d3d !important;
 }
 body.dark-theme .placeholder-cell { color: #64748b !important; }
+
+.news { margin-top: 2rem; }
+.news__title {
+    font-size: 1.4rem;
+    margin-bottom: 1.2rem;
+    color: var(--color-primary);
+}
+.news__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.2rem;
+}
+.news__card {
+    background: #f8fafc;
+    padding: 1.2rem;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    transition: var(--transition);
+    position: relative;
+}
+.news__card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: #cbd5e1;
+}
+.news__date {
+    font-size: 0.8rem;
+    color: var(--color-text-light);
+    margin-bottom: 0.3rem;
+    display: block;
+}
+.news__heading {
+    font-size: 1.05rem;
+    margin: 0 0 0.4rem 0;
+    color: var(--color-primary);
+    font-weight: 600;
+}
+.news__text {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin-bottom: 0.8rem;
+    line-height: 1.5;
+}
+.news__tag {
+    display: inline-block;
+    padding: 0.25rem 0.6rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 500;
+}
+.news__tag--event { background: rgba(59, 130, 246, 0.15); color: #1d4ed8; }
+.news__tag--food { background: rgba(245, 158, 11, 0.15); color: #b45309; }
+.news__tag--urgent { background: rgba(239, 68, 68, 0.15); color: #b91c1c; }
+
+body.dark-theme .news__title { color: #ffffff !important; }
+body.dark-theme .news__card {
+    background: #3d3d5c !important;
+    border-color: #4a4a6a !important;
+}
+body.dark-theme .news__heading { color: #e0e0e0 !important; }
+body.dark-theme .news__text { color: #b0b0c0 !important; }
+body.dark-theme .news__date { color: #808090 !important; }
+body.dark-theme .news__tag--event { background: rgba(77, 171, 247, 0.25); color: #93c5fd; }
+body.dark-theme .news__tag--food { background: rgba(245, 158, 11, 0.25); color: #fcd34d; }
+body.dark-theme .news__tag--urgent { background: rgba(239, 68, 68, 0.25); color: #f87171; }
